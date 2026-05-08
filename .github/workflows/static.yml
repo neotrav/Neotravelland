@@ -36,6 +36,13 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  - name: Checkout
+    # Было: actions/checkout@v4
+    uses: actions/checkout@v6 
+
+  - name: Set up Node
+    # Было: actions/setup-node@v4
+    uses: actions/setup-node@v6
+    with:
+      node-version: 24 # Рекомендую также обновить саму версию Node.js для проекта
+      cache: 'npm'
