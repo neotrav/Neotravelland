@@ -17,23 +17,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
-
       - name: Set up Node
         uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'pnpm'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm install
+
+      - name: Fix Vite Permissions
+        # Эта строка принудительно разрешает запуск vite, исправляя ошибку 127
+        run: chmod +x ./node_modules/.bin/vite
 
       - name: Build
-        # Используем pnpm exec, чтобы гарантированно найти бинарник
-        run: pnpm run build
+        run: npm run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
